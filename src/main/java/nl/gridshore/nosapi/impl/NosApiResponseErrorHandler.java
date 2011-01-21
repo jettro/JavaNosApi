@@ -3,6 +3,8 @@ package nl.gridshore.nosapi.impl;
 import nl.gridshore.nosapi.ClientException;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.ClientHttpResponse;
@@ -22,6 +24,8 @@ import java.nio.charset.Charset;
  * @author Jettro Coenradie
  */
 public class NosApiResponseErrorHandler implements ResponseErrorHandler {
+    private final static Logger logger = LoggerFactory.getLogger(NosApiResponseErrorHandler.class);
+
     @Override
     public boolean hasError(ClientHttpResponse response) throws IOException {
         HttpStatus statusCode = response.getStatusCode();
@@ -31,6 +35,7 @@ public class NosApiResponseErrorHandler implements ResponseErrorHandler {
 
     @Override
     public void handleError(ClientHttpResponse response) throws IOException {
+        logger.debug("Handle error '{}' received from the NOS server.", response.getStatusCode().name());
         HttpStatus statusCode = response.getStatusCode();
         MediaType contentType = response.getHeaders().getContentType();
         Charset charset = contentType != null ? contentType.getCharSet() : null;
@@ -56,10 +61,12 @@ public class NosApiResponseErrorHandler implements ResponseErrorHandler {
     }
 
     private void throwClientException(Charset charset, byte[] body) throws IOException {
+        String jsonContentString = (charset != null)?new String(body, charset):new String(body);
+
         ObjectMapper mapper = new ObjectMapper();
-        String jsonConstentString = (charset != null)?new String(body, charset):new String(body);
-        JsonNode rootNode = mapper.readValue(jsonConstentString, JsonNode.class);
+        JsonNode rootNode = mapper.readValue(jsonContentString, JsonNode.class);
         String type = rootNode.getFieldNames().next();
+
         JsonNode errorNode = rootNode.getElements().next().get("error");
         int code = errorNode.get("code").getIntValue();
         String message = errorNode.get("message").getTextValue();

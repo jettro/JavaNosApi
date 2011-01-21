@@ -1,8 +1,12 @@
-apply plugin: 'groovy'
+apply plugin: 'java'
 apply plugin: 'idea'
 
 group = "nl.gridshore.nosapi"
 version = "0.1-SNAPSHOT"
+
+slf4jVersion = "1.6.1"
+jacksonVersion = "1.7.1"
+springVersion = "3.0.5.RELEASE"
 
 repositories {
     mavenRepo urls: ["file://" + System.getProperty('user.home') + "/.m2/repository/"]
@@ -10,14 +14,15 @@ repositories {
 }
 
 dependencies {
-    groovy "org.codehaus.groovy:groovy:1.7.6"
-
-	compile "org.codehaus.jackson:jackson-core-asl:1.7.1",
-		    "org.codehaus.jackson:jackson-mapper-asl:1.7.1",
-            "org.springframework:spring-core:3.0.5.RELEASE",
-            "org.springframework:spring-web:3.0.5.RELEASE",
+	compile "org.codehaus.jackson:jackson-core-asl:$jacksonVersion",
+		    "org.codehaus.jackson:jackson-mapper-asl:$jacksonVersion",
+            "org.springframework:spring-core:$springVersion",
+            "org.springframework:spring-web:$springVersion",
             "joda-time:joda-time:1.6.2",
-            "org.codehaus.groovy.modules.http-builder:http-builder:0.5.1"
+            "org.slf4j:slf4j-api:$slf4jVersion",
+            "org.slf4j:jcl-over-slf4j:$slf4jVersion",
+            "org.slf4j:jul-to-slf4j:$slf4jVersion"
 
-    testCompile "junit:junit:4.8.2"
+    testCompile "junit:junit:4.8.2",
+                "ch.qos.logback:logback-classic:0.9.27"
 }
