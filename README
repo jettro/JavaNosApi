@@ -1,0 +1,14 @@
+Welcome to the very basic version of a java client for the open data api of the NOS.
+More information about the api can be found here:
+
+http://open.nos.nl/
+
+At the moment most of the requests that the api supports are implemented.
+
+The v1 version is the exposed version of the api of the NOS
+
+______________________________________________________________________________________
+If you want to compile the project yourself and you want to run the integration test,
+you need to ask for an api key and you have to create a file key.properties and put in
+on your classpath. You can use the test/resources for instance. Put one property in the
+file called key. Nice :-)
