@@ -12,3 +12,7 @@ If you want to compile the project yourself and you want to run the integration 
 you need to ask for an api key and you have to create a file key.properties and put in
 on your classpath. You can use the test/resources for instance. Put one property in the
 file called key. Nice :-)
+
+If you want to learn more about the internals of the project a good way to start is to
+read my blog post:
+http://www.gridshore.nl/2011/01/20/using-the-nos-open-data-api-with-the-springframework-and-jackson/
