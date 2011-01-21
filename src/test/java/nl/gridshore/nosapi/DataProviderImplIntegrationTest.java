@@ -1,5 +1,6 @@
 package nl.gridshore.nosapi;
 
+import nl.gridshore.nosapi.impl.DataProviderImpl;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;

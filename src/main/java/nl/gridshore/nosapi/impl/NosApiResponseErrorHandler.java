@@ -1,5 +1,6 @@
-package nl.gridshore.nosapi;
+package nl.gridshore.nosapi.impl;
 
+import nl.gridshore.nosapi.ClientException;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.http.HttpStatus;
