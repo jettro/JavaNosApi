@@ -1,7 +1,0 @@
-dependencies {
-		compile "org.codehaus.jackson:jackson-core-asl:$jacksonVersion",
-			    "org.codehaus.jackson:jackson-mapper-asl:$jacksonVersion",
-            	"org.springframework:spring-core:$springVersion",
-	            "org.springframework:spring-web:$springVersion"
-
-}
