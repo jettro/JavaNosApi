@@ -1,28 +1,42 @@
 apply plugin: 'java'
 apply plugin: 'idea'
 
-group = "nl.gridshore.nosapi"
-version = "0.1-SNAPSHOT"
+sourceCompatibility = 1.6
 
 slf4jVersion = "1.6.1"
 jacksonVersion = "1.7.1"
 springVersion = "3.0.5.RELEASE"
 
-repositories {
-    mavenRepo urls: ["file://" + System.getProperty('user.home') + "/.m2/repository/"]
-    mavenCentral()
+
+subprojects {
+	apply plugin: 'java'
+	apply plugin: 'idea'
+	
+	group = "nl.gridshore.nosapi"
+	version = "0.1-SNAPSHOT"
+	sourceCompatibility = 1.6
+
+    configurations {
+        all*.exclude group: "commons-logging", module: "commons-logging"
+    }
+
+	
+	repositories {
+    	mavenRepo urls: ["file://" + System.getProperty('user.home') + "/.m2/repository/"]
+	    mavenCentral()
+	}
+
+	dependencies {
+		compile "joda-time:joda-time:1.6.2",
+        	    "org.slf4j:slf4j-api:$slf4jVersion",
+	            "org.slf4j:jcl-over-slf4j:$slf4jVersion",
+    	        "org.slf4j:jul-to-slf4j:$slf4jVersion"
+
+		runtime "ch.qos.logback:logback-classic:0.9.27"
+
+	    testCompile "junit:junit:4.8.2"
+	}
+
 }
 
-dependencies {
-	compile "org.codehaus.jackson:jackson-core-asl:$jacksonVersion",
-		    "org.codehaus.jackson:jackson-mapper-asl:$jacksonVersion",
-            "org.springframework:spring-core:$springVersion",
-            "org.springframework:spring-web:$springVersion",
-            "joda-time:joda-time:1.6.2",
-            "org.slf4j:slf4j-api:$slf4jVersion",
-            "org.slf4j:jcl-over-slf4j:$slf4jVersion",
-            "org.slf4j:jul-to-slf4j:$slf4jVersion"
 
-    testCompile "junit:junit:4.8.2",
-                "ch.qos.logback:logback-classic:0.9.27"
-}
