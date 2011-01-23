@@ -1,5 +1,2 @@
-<p>Welcome to this very nice example</p>
+<p>Welcome to this example of using the java client for the NOS open data API</p>
 
-<ul>
-    <li><a href="${ctx}/news/articles">Articles</a></li>
-</ul>
