@@ -30,5 +30,12 @@
             <artifactId>spring-web</artifactId>
             <version>${spring.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>1.7.6</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 </project>

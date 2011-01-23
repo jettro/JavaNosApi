@@ -11,4 +11,4 @@ appender("STDOUT", ConsoleAppender) {
 root(INFO, ["STDOUT"])
 
 logger("nl.gridshore", DEBUG, ["STDOUT"])
-logger("org.springframework.web", DEBUG,["STDOUT"], false)
+logger("org.springframework.web.client.RESTTemplate", DEBUG,["STDOUT"], false)

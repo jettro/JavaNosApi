@@ -13,6 +13,7 @@
     <groupId>nl.gridshore.nosapi</groupId>
     <artifactId>example-web</artifactId>
     <version>0.1-SNAPSHOT</version>
+    <packaging>war</packaging>
 
     <dependencies>
         <dependency>
@@ -25,6 +26,20 @@
             <artifactId>spring-webmvc</artifactId>
             <version>${spring.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>1.7.6</version>
+        </dependency>
+        <dependency>
+            <groupId>opensymphony</groupId>
+            <artifactId>sitemesh</artifactId>
+            <version>2.4.2</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
     </dependencies>
 </project>
