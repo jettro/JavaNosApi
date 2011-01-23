@@ -15,9 +15,9 @@ public class Article {
     private String link;
     private DateTime published;
     private DateTime lastUpdate;
-    private String thumbnail_xs;
-    private String thumbnail_s;
-    private String thumbnail_m;
+    private String thumbnailXS;
+    private String thumbnailS;
+    private String thumbnailM;
     private String thumbnail;
     private List<String> keywords;
     private String embedCode;
@@ -30,11 +30,11 @@ public class Article {
                    List<String> keywords,
                    DateTime lastUpdate,
                    DateTime published,
-                   String thumbnail_m,
-                   String thumbnail_s,
-                   String thumbnail_xs,
+                   String thumbnailM,
+                   String thumbnailS,
+                   String thumbnailXS,
                    String thumbnail) {
-        this(id,type,title,description,link,keywords,lastUpdate,published,thumbnail_m,thumbnail_s,thumbnail_xs,thumbnail,null);
+        this(id,type,title,description,link,keywords,lastUpdate,published, thumbnailM, thumbnailS, thumbnailXS,thumbnail,null);
     }
 
     public Article(String id,
@@ -45,9 +45,9 @@ public class Article {
                    List<String> keywords,
                    DateTime lastUpdate,
                    DateTime published,
-                   String thumbnail_m,
-                   String thumbnail_s,
-                   String thumbnail_xs,
+                   String thumbnailM,
+                   String thumbnailS,
+                   String thumbnailXS,
                    String thumbnail,
                    String embedCode) {
         this.id = id;
@@ -58,9 +58,10 @@ public class Article {
         this.keywords = keywords;
         this.lastUpdate = lastUpdate;
         this.published = published;
-        this.thumbnail_m = thumbnail_m;
-        this.thumbnail_s = thumbnail_s;
-        this.thumbnail_xs = thumbnail_xs;
+        this.thumbnailM = thumbnailM;
+        this.thumbnailS = thumbnailS;
+        this.thumbnailXS = thumbnailXS;
+        this.thumbnail = thumbnail;
         this.embedCode = embedCode;
     }
 
@@ -88,16 +89,16 @@ public class Article {
         return published;
     }
 
-    public String getThumbnail_m() {
-        return thumbnail_m;
+    public String getThumbnailM() {
+        return thumbnailM;
     }
 
-    public String getThumbnail_s() {
-        return thumbnail_s;
+    public String getThumbnailS() {
+        return thumbnailS;
     }
 
-    public String getThumbnail_xs() {
-        return thumbnail_xs;
+    public String getThumbnailXS() {
+        return thumbnailXS;
     }
 
     public String getTitle() {

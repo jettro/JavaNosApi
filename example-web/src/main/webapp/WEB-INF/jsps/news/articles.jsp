@@ -2,8 +2,8 @@
 
 <c:forEach var="article" items="${articles}">
     <div class="article">
-            <c:if test="${not empty article.thumbnail_s}">
-                <img src=" ${article.thumbnail_s}" alt="Thumbnail"/>
+            <c:if test="${not empty article.thumbnailS}">
+                <img src=" ${article.thumbnailS}" alt="Thumbnail"/>
             </c:if>
             <div class="title"><a href="${article.link}">${article.title}</a></div>
         <div class="description">${article.description}</div>
