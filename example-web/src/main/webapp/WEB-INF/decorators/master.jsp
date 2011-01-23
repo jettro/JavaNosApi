@@ -32,9 +32,9 @@
     </div>
     <div class="heading">
         <h2>Sport news</h2>
-        <a href="${ctx}/sportnews/articles">Articles</a><br/>
-        <a href="${ctx}/sportnews/videos">Videos</a><br/>
-        <a href="${ctx}/sportnews/audios">Audio</a><br/>
+        <a href="${ctx}/news/sport/articles">Articles</a><br/>
+        <a href="${ctx}/news/sport/videos">Videos</a><br/>
+        <a href="${ctx}/news/sport/audios">Audio</a><br/>
     </div>
     <br clear="all"/>
 </div>

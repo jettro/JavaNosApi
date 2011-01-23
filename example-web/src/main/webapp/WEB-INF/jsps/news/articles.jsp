@@ -16,5 +16,4 @@
             </span>
         </div>
     </div>
-
 </c:forEach>
