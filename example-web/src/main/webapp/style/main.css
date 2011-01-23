@@ -1,0 +1,54 @@
+body {
+
+}
+/* Navigation*/
+#navigation {
+    background-color: #d3d3d3;
+    color:#00008b;
+    border: 1px solid black;
+    display:block;
+}
+
+#navigation div.heading {
+    float:left;
+    padding: 0 20px;
+    border-right: 1px solid #00008b;
+}
+
+#navigation div.heading a {
+    text-decoration:none;
+    font-size:large;
+}
+
+/* Article styling */
+.article {
+    border: 1px solid #00008b;
+    margin-bottom:10px;
+    clear:left;
+    display:block;
+    min-height:93px;
+}
+
+.article img {
+    display:block;
+    float:left;
+}
+
+.article .title {
+    padding-bottom:10px;
+    font-size: larger;
+}
+
+.article .title a {
+    color:#00008b;
+}
+
+.article .description {
+    padding-bottom:10px;
+}
+
+.article .footer {
+    color: silver;
+    font-style:italic;
+    font-size:smaller;
+}

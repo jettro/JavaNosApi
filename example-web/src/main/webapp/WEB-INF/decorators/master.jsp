@@ -20,10 +20,28 @@
 <html>
 <head>
     <title><decorator:title/></title>
+    <link rel="stylesheet" href="${ctx}/style/main.css"/>
 </head>
 <body>
+<div id="navigation">
+    <div class="heading">
+        <h2>News</h2>
+        <a href="${ctx}/news/articles">Articles</a><br/>
+        <a href="${ctx}/news/videos">Videos</a><br/>
+        <a href="${ctx}/news/audios">Audio</a><br/>
+    </div>
+    <div class="heading">
+        <h2>Sport news</h2>
+        <a href="${ctx}/sportnews/articles">Articles</a><br/>
+        <a href="${ctx}/sportnews/videos">Videos</a><br/>
+        <a href="${ctx}/sportnews/audios">Audio</a><br/>
+    </div>
+    <br clear="all"/>
+</div>
+
 <div id="main">
     <decorator:body/>
 </div>
+
 </body>
 </html>
