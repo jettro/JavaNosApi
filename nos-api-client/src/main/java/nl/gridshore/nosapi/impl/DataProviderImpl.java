@@ -2,7 +2,11 @@ package nl.gridshore.nosapi.impl;
 
 import nl.gridshore.nosapi.DataProvider;
 import nl.gridshore.nosapi.SearchResults;
+import nl.gridshore.nosapi.UnknownClientException;
 import nl.gridshore.nosapi.mapping.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.util.Assert;
 import org.springframework.web.client.RestTemplate;
 
@@ -18,6 +22,8 @@ import java.util.List;
  * @author Jettro Coenradie
  */
 public class DataProviderImpl implements DataProvider {
+    private final static Logger logger = LoggerFactory.getLogger(DataProviderImpl.class);
+
     private String serverBaseUrl = "http://open.nos.nl/v1/";
 
     private final String apiKey;
@@ -78,7 +84,16 @@ public class DataProviderImpl implements DataProvider {
     public SearchResults searchForDocuments(String queryString) {
         Assert.notNull(queryString);
         String url = serverBaseUrl + "search/query/key/{apikey}/output/json/q/{search}";
-        SearchWrapper searchResults = restTemplate.getForObject(url, SearchWrapper.class, apiKey, queryString);
+        SearchWrapper searchResults;
+        try {
+            searchResults = restTemplate.getForObject(url, SearchWrapper.class, apiKey, queryString);
+        } catch (HttpMessageNotReadableException e) {
+            logger.error("There might be a problem on the server while searching for documents. Usually this exception " +
+                    "is thrown if the json returned has a wrong format. The used query is {}",
+                    queryString, e.getMostSpecificCause());
+            throw new UnknownClientException("Most probably an incorrect response was received from the nos data api",
+                    e.getMostSpecificCause());
+        }
         ArrayList<nl.gridshore.nosapi.mapping.Document> documents = searchResults.getSearch().get(0).getDocuments();
         List<nl.gridshore.nosapi.Document> foundDocuments = new ArrayList<nl.gridshore.nosapi.Document>();
         for (nl.gridshore.nosapi.mapping.Document document : documents) {

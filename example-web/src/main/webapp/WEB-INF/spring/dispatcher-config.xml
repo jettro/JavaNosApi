@@ -41,4 +41,13 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
+    <!-- I do not want to print stacktraces to the screen of throw exceptions to the client, therefore I use this
+        catch all exceptions mechanism -->
+    <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <map>
+                <entry key="java.lang.Exception" value="error"/>
+            </map>
+        </property>
+    </bean>
 </beans>
