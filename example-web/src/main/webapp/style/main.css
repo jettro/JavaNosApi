@@ -52,3 +52,12 @@ body {
     font-style:italic;
     font-size:smaller;
 }
+
+/* keyword styling */
+.keyword {
+    font-size:small;
+}
+
+.keyword .tag {
+    font-style: italic;
+}

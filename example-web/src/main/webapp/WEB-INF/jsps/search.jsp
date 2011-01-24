@@ -3,11 +3,22 @@
 
 <form method="GET" action="${ctx}/search">
     <label for="q">Search for</label>
-    <input id="q" name="q" /><br/>
+    <input id="q" name="q"/><br/>
     <input type="submit" value="Search"/>
 </form>
 
 <c:if test="${not empty results}">
+    <h3>Keywords</h3>
+    <table class="keyword">
+    <c:forEach var="keyword" items="${results.keywords}">
+        <tr>
+            <td class="tag">${keyword.tag}</td><td class="count">${keyword.count}</td>
+        </tr>
+    </c:forEach>
+    </table>
+</c:if>
+<c:if test="${not empty results}">
+    <h3>Results</h3>
     <c:forEach var="document" items="${results.documents}">
         <div class="article">
             <c:if test="${not empty document.thumbnail}">
