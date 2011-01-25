@@ -63,6 +63,7 @@ public class TVGuideController {
             List<DayGuide> dayGuides = dataProvider.obtainTVGuide(channel,startDate,endDate);
             modelMap.addAttribute("days", dayGuides);
         }
+        modelMap.addAttribute("tvchannels",TVChannel.values());
         return "guide/tvguidefilter";
     }
 }
