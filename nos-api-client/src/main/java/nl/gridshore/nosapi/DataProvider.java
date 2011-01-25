@@ -15,6 +15,8 @@
 
 package nl.gridshore.nosapi;
 
+import org.joda.time.DateTime;
+
 import java.util.List;
 
 /**
@@ -108,4 +110,17 @@ public interface DataProvider {
      */
     List<DayGuide> obtainRadioGuide();
 
+    /**
+     * Returns the list of days with a maximum of 14 with all tv shows on those days for specified channel. The channel
+     * and the start/end dat are not mandatory to provide. If providing dates, you always have to provide both dates.
+     * The end date must be after the start date. In case of exceptions, IllegalArgumentException obejcts are thrown.
+     *
+     * Date's must have format yyyy-mm-dd.
+     *
+     * @param channel TVChannel to filter on
+     * @param startDate String containing a date in format yyyy-mm-dd as a startDate
+     * @param endDate String containing a date in format yyyy-mm-dd as a endDate
+     * @return List of DayGuide objects that each contain programs
+     */
+    List<DayGuide> obtainTVGuide(TVChannel channel, String startDate, String endDate);
 }

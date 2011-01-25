@@ -17,14 +17,16 @@ package nl.gridshore.nosapi.impl;
 
 import nl.gridshore.nosapi.*;
 import nl.gridshore.nosapi.mapping.*;
-import nl.gridshore.nosapi.mapping.Article;
 import nl.gridshore.nosapi.mapping.DayGuide;
-import nl.gridshore.nosapi.mapping.Document;
-import nl.gridshore.nosapi.mapping.Keyword;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -40,6 +42,7 @@ import java.util.List;
  */
 public class DataProviderImpl implements DataProvider {
     private final static Logger logger = LoggerFactory.getLogger(DataProviderImpl.class);
+    private final static DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
 
     private String serverBaseUrl = "http://open.nos.nl/v1/";
 
@@ -149,9 +152,55 @@ public class DataProviderImpl implements DataProvider {
         return obtainGuide("radio");
     }
 
+    @Override
+    public List<nl.gridshore.nosapi.DayGuide> obtainTVGuide(TVChannel channel, String startDate, String endDate) {
+        String type = "tv";
+
+        // validate provided dates
+        if (StringUtils.hasText(startDate) || StringUtils.hasText(endDate)) {
+            if (!StringUtils.hasText(startDate) || !StringUtils.hasText(endDate)) {
+                throw new IllegalArgumentException(
+                        "When providing a start or end data, the other one needs to be provided as well.");
+            }
+            DateTime startTime = formatter.parseDateTime(startDate);
+            DateTime endTime = formatter.parseDateTime(endDate);
+            if (endTime.isBefore(startTime)) {
+                throw new IllegalArgumentException("Start date must be before end date");
+            }
+        }
+
+        StringBuilder builder = new StringBuilder();
+        builder.append(serverBaseUrl);
+        builder.append("guide/{type}/key/{apikey}/output/json");
+
+        List<Comparable> arguments = new ArrayList<Comparable>();
+        arguments.add(type);
+        arguments.add(apiKey);
+
+        if (channel != null) {
+            builder.append("/channel/{channel}");
+            arguments.add(channel);
+        }
+        if (StringUtils.hasText(startDate) && StringUtils.hasText(endDate)) {
+            builder.append("/start/{startdate}");
+            arguments.add(startDate);
+
+            builder.append("/end/{enddate}");
+            arguments.add(endDate);
+        }
+
+        Guide guide = restTemplate.getForObject(builder.toString(), Guide.class, arguments.toArray());
+
+        return mapJSONGuideToOurGuide(guide);
+    }
+
     private List<nl.gridshore.nosapi.DayGuide> obtainGuide(String type) {
         String url = serverBaseUrl + "guide/{type}/key/{apikey}/output/json";
         Guide guide = restTemplate.getForObject(url, Guide.class, type, apiKey);
+        return mapJSONGuideToOurGuide(guide);
+    }
+
+    private List<nl.gridshore.nosapi.DayGuide> mapJSONGuideToOurGuide(Guide guide) {
         ArrayList<DayGuide> dayGuides = guide.getGuide().get(0);
         List<nl.gridshore.nosapi.DayGuide> days = new ArrayList<nl.gridshore.nosapi.DayGuide>();
         for (DayGuide dayGuide : dayGuides) {

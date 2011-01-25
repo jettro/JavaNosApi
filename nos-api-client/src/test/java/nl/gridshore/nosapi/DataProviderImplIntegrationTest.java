@@ -17,6 +17,8 @@ package nl.gridshore.nosapi;
 
 import nl.gridshore.nosapi.impl.DataProviderImpl;
 import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -116,4 +118,50 @@ public class DataProviderImplIntegrationTest {
         LocalDate now = new LocalDate();
         assertEquals(now.dayOfMonth(), dayGuides.get(1).getDay().dayOfMonth());
     }
+
+    @Test
+    public void testFilteredTvGuide_channel() throws Exception {
+        List<DayGuide> dayGuides = dataProvider.obtainTVGuide(TVChannel.NL1,null,null);
+        assertNotNull(dayGuides);
+        assertEquals("We should have 3 days; yesterday, today and tomorrow.", 3, dayGuides.size());
+        LocalDate now = new LocalDate();
+        assertEquals(now.dayOfMonth(), dayGuides.get(1).getDay().dayOfMonth());
+    }
+
+    @Test
+    public void testFilteredTvGuide_start_end() throws Exception {
+        List<DayGuide> dayGuides = dataProvider.obtainTVGuide(null,createDateString(-1),createDateString(12));
+        assertNotNull(dayGuides);
+        assertEquals("We should have 14 days;", 14, dayGuides.size());
+        LocalDate now = new LocalDate();
+        assertEquals(now.dayOfMonth(), dayGuides.get(1).getDay().dayOfMonth());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testFilteredTvGuide_start() throws Exception {
+        dataProvider.obtainTVGuide(null,createDateString(-1), null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testFilteredTvGuide_end() throws Exception {
+        dataProvider.obtainTVGuide(null,null,createDateString(-1));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testFilteredTvGuide_start_end_wrongdateformat() throws Exception {
+        dataProvider.obtainTVGuide(null,createDateString(-1),"dfdsfds");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testFilteredTvGuide_start_end_endbeforestart() throws Exception {
+        dataProvider.obtainTVGuide(null,createDateString(5),createDateString(-1));
+    }
+
+
+    private String createDateString(int daysAfterNow) {
+        LocalDate now = new LocalDate();
+        now.plusDays(daysAfterNow);
+        return now.plusDays(daysAfterNow).toString("yyyy-MM-dd");
+    }
+
 }
