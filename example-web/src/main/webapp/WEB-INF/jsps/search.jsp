@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
 
 <%--
   ~ Copyright (c) 2011. Gridshore
@@ -43,7 +44,7 @@
             </div>
             <div class="description">${document.description}</div>
             <div class="footer">
-                <span class="published">${document.published}</span>
+                <span class="published"><joda:format value="${document.published}" style="LM"/></span>
             <span class="tags">
                 <c:forEach items="${document.keywords}" var="keyword">
                     "${keyword}"
