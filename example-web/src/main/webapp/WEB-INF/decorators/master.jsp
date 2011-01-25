@@ -37,6 +37,11 @@
         <a href="${ctx}/news/sport/audios">Audio</a><br/>
     </div>
     <div class="heading">
+        <h2>Guides</h2>
+        <a href="${ctx}/tvguide">TV Guide</a><br/>
+        <a href="${ctx}/radioguide">Radio Guide</a><br/>
+    </div>
+    <div class="heading">
         <h2>Search</h2>
         <a href="${ctx}/search">Search for News</a><br/>
     </div>
