@@ -83,7 +83,7 @@ public class Article {
         return published;
     }
 
-    @JsonDeserialize(using = JsonDateDeserializer.class)
+    @JsonDeserialize(using = JsonDateTimeDeserializer.class)
     public void setPublished(DateTime published) {
         this.published = published;
     }
@@ -92,7 +92,7 @@ public class Article {
         return lastUpdate;
     }
 
-    @JsonDeserialize(using = JsonDateDeserializer.class)
+    @JsonDeserialize(using = JsonDateTimeDeserializer.class)
     @JsonProperty("last_update")
     public void setLastUpdate(DateTime lastUpdate) {
         this.lastUpdate = lastUpdate;

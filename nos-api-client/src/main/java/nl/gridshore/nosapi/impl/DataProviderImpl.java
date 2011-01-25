@@ -15,10 +15,12 @@
 
 package nl.gridshore.nosapi.impl;
 
-import nl.gridshore.nosapi.DataProvider;
-import nl.gridshore.nosapi.SearchResults;
-import nl.gridshore.nosapi.UnknownClientException;
+import nl.gridshore.nosapi.*;
 import nl.gridshore.nosapi.mapping.*;
+import nl.gridshore.nosapi.mapping.Article;
+import nl.gridshore.nosapi.mapping.DayGuide;
+import nl.gridshore.nosapi.mapping.Document;
+import nl.gridshore.nosapi.mapping.Keyword;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -135,6 +137,39 @@ public class DataProviderImpl implements DataProvider {
         }
 
         return new SearchResults(foundDocuments, foundKeywords);
+    }
+
+    @Override
+    public List<nl.gridshore.nosapi.DayGuide> obtainTVGuide() {
+        return obtainGuide("tv");
+    }
+
+    @Override
+    public List<nl.gridshore.nosapi.DayGuide> obtainRadioGuide() {
+        return obtainGuide("radio");
+    }
+
+    private List<nl.gridshore.nosapi.DayGuide> obtainGuide(String type) {
+        String url = serverBaseUrl + "guide/{type}/key/{apikey}/output/json";
+        Guide guide = restTemplate.getForObject(url, Guide.class, type, apiKey);
+        ArrayList<DayGuide> dayGuides = guide.getGuide().get(0);
+        List<nl.gridshore.nosapi.DayGuide> days = new ArrayList<nl.gridshore.nosapi.DayGuide>();
+        for (DayGuide dayGuide : dayGuides) {
+            List<Program> programs = new ArrayList<Program>();
+            for (GuideItem guideItem :dayGuide.getGuide()) {
+                programs.add(new Program(guideItem.getId(),
+                        guideItem.getTitle(),
+                        guideItem.getType(),
+                        guideItem.getGenre(),
+                        guideItem.getDescription(),
+                        guideItem.getStartTime(),
+                        guideItem.getEndTime(),
+                        new Channel(guideItem.getChannelCode(),guideItem.getChannelIcon(),guideItem.getChannelName())
+                        ));
+            }
+            days.add(new nl.gridshore.nosapi.DayGuide(dayGuide.getDate(),programs));
+        }
+        return days;
     }
 
     private List<nl.gridshore.nosapi.Article> obtainLatestItemPerCategory(String category, String type, Class<? extends LatestItem> clazz) {

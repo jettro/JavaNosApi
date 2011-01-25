@@ -15,23 +15,32 @@
 
 package nl.gridshore.nosapi.mapping;
 
-import org.codehaus.jackson.JsonParser;
-import org.codehaus.jackson.map.DeserializationContext;
-import org.codehaus.jackson.map.JsonDeserializer;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
-import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * @author Jettro Coenradie
  */
-public class JsonDateDeserializer extends JsonDeserializer<LocalDate> {
-    private final DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
+public class DayGuide {
+    private LocalDate date;
+    private ArrayList<GuideItem> guide = new ArrayList<GuideItem>();
 
-    @Override
-    public LocalDate deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
-        return formatter.parseDateTime(jp.getText()).toLocalDate();
+    public LocalDate getDate() {
+        return date;
+    }
+
+    @JsonDeserialize(using = JsonDateDeserializer.class)
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public ArrayList<GuideItem> getGuide() {
+        return guide;
+    }
+
+    public void setGuide(ArrayList<GuideItem> guide) {
+        this.guide = guide;
     }
 }

@@ -91,4 +91,21 @@ public interface DataProvider {
      * @return SearchResults objects found with the query string containing the documents and the keywords
      */
     SearchResults searchForDocuments(String queryString);
+
+    /**
+     * Returns the tv guide for yesterday, today and tomorrow as specified for the default in the NOS api.
+     * {@link "http://open.nos.nl/documentatie/v1/gids/tv/"}
+     *
+     * @return Guide containing the tv programs for the mentioned three days
+     */
+    List<DayGuide> obtainTVGuide();
+
+    /**
+     * Returns the radio guide for yesterday, today and tomorrow as specified for the default in the NOS api.
+     * {@link "http://open.nos.nl/documentatie/v1/gids/radio/"}
+     *
+     * @return Guide containing the tv programs for the mentioned three days
+     */
+    List<DayGuide> obtainRadioGuide();
+
 }

@@ -13,25 +13,29 @@
  * limitations under the License.
  */
 
-package nl.gridshore.nosapi.mapping;
+package nl.gridshore.nosapi;
 
-import org.codehaus.jackson.JsonParser;
-import org.codehaus.jackson.map.DeserializationContext;
-import org.codehaus.jackson.map.JsonDeserializer;
 import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
-import java.io.IOException;
+import java.util.List;
 
 /**
  * @author Jettro Coenradie
  */
-public class JsonDateDeserializer extends JsonDeserializer<LocalDate> {
-    private final DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
+public class DayGuide {
+    private LocalDate day;
+    private List<Program> programs;
 
-    @Override
-    public LocalDate deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
-        return formatter.parseDateTime(jp.getText()).toLocalDate();
+    public DayGuide(LocalDate day, List<Program> programs) {
+        this.day = day;
+        this.programs = programs;
+    }
+
+    public LocalDate getDay() {
+        return day;
+    }
+
+    public List<Program> getPrograms() {
+        return programs;
     }
 }

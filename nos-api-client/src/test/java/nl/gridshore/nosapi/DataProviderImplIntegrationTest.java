@@ -16,6 +16,7 @@
 package nl.gridshore.nosapi;
 
 import nl.gridshore.nosapi.impl.DataProviderImpl;
+import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -26,6 +27,7 @@ import java.util.List;
 import java.util.Properties;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * @author Jettro Coenradie
@@ -38,7 +40,7 @@ public class DataProviderImplIntegrationTest {
     public static void loadProperties() throws IOException {
         Properties props = new Properties();
         InputStream inputStream = DataProviderImplIntegrationTest.class.getClassLoader()
-            .getResourceAsStream("key.properties");
+                .getResourceAsStream("key.properties");
         props.load(inputStream);
         key = props.getProperty("key");
     }
@@ -58,42 +60,60 @@ public class DataProviderImplIntegrationTest {
     @Test
     public void testObtainLatestNewsArticles() throws Exception {
         List<Article> articles = dataProvider.obtainLatestNewsArticles();
-        assertEquals(10,articles.size());
+        assertEquals(10, articles.size());
     }
 
     @Test
     public void testObtainLatestSportNewsArticles() throws Exception {
         List<Article> articles = dataProvider.obtainLatestSportsNewsArticles();
-        assertEquals(10,articles.size());
+        assertEquals(10, articles.size());
     }
 
     @Test
     public void testObtainLatestNewsVideo() throws Exception {
         List<Article> articles = dataProvider.obtainLatestNewsVideos();
-        assertEquals(10,articles.size());
+        assertEquals(10, articles.size());
     }
 
     @Test
     public void testObtainLatestSportNewsVideo() throws Exception {
         List<Article> articles = dataProvider.obtainLatestSportsNewsVideos();
-        assertEquals(10,articles.size());
+        assertEquals(10, articles.size());
     }
 
     @Test
     public void testObtainLatestNewsAudio() throws Exception {
         List<Article> articles = dataProvider.obtainLatestNewsAudio();
-        assertEquals(10,articles.size());
+        assertEquals(10, articles.size());
     }
 
     @Test
     public void testObtainLatestSportNewsAudio() throws Exception {
         List<Article> articles = dataProvider.obtainLatestSportsNewsAudio();
-        assertEquals(10,articles.size());
+        assertEquals(10, articles.size());
     }
 
     @Test
     public void testSearchForDocuments() throws Exception {
         SearchResults voetbal = dataProvider.searchForDocuments("voetbal");
-        assertEquals(25,voetbal.getDocuments().size());
+        assertEquals(25, voetbal.getDocuments().size());
+    }
+
+    @Test
+    public void testTvGuide() throws Exception {
+        List<DayGuide> dayGuides = dataProvider.obtainTVGuide();
+        assertNotNull(dayGuides);
+        assertEquals("We should have 3 days; yesterday, today and tomorrow.", 3, dayGuides.size());
+        LocalDate now = new LocalDate();
+        assertEquals(now.dayOfMonth(), dayGuides.get(1).getDay().dayOfMonth());
+    }
+
+    @Test
+    public void testRadioGuide() throws Exception {
+        List<DayGuide> dayGuides = dataProvider.obtainRadioGuide();
+        assertNotNull(dayGuides);
+        assertEquals("We should have 3 days; yesterday, today and tomorrow.", 3, dayGuides.size());
+        LocalDate now = new LocalDate();
+        assertEquals(now.dayOfMonth(), dayGuides.get(1).getDay().dayOfMonth());
     }
 }
