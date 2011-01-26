@@ -123,4 +123,19 @@ public interface DataProvider {
      * @return List of DayGuide objects that each contain programs
      */
     List<DayGuide> obtainTVGuide(TVChannel channel, String startDate, String endDate);
+
+    /**
+     * Returns the list of days with a maximum of 14 with all radio shows on those days for specified channel. The channel
+     * and the start/end dat are not mandatory to provide. If providing dates, you always have to provide both dates.
+     * The end date must be after the start date. In case of exceptions, IllegalArgumentException obejcts are thrown.
+     *
+     * Date's must have format yyyy-mm-dd.
+     *
+     * @param channel RadioChannel to filter on
+     * @param startDate String containing a date in format yyyy-mm-dd as a startDate
+     * @param endDate String containing a date in format yyyy-mm-dd as a endDate
+     * @return List of DayGuide objects that each contain programs
+     */
+    List<DayGuide> obtainRadioGuide(RadioChannel channel, String startDate, String endDate);
+
 }

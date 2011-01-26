@@ -17,8 +17,6 @@ package nl.gridshore.nosapi;
 
 import nl.gridshore.nosapi.impl.DataProviderImpl;
 import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -124,6 +122,15 @@ public class DataProviderImplIntegrationTest {
         List<DayGuide> dayGuides = dataProvider.obtainTVGuide(TVChannel.NL1,null,null);
         assertNotNull(dayGuides);
         assertEquals("We should have 3 days; yesterday, today and tomorrow.", 3, dayGuides.size());
+        LocalDate now = new LocalDate();
+        assertEquals(now.dayOfMonth(), dayGuides.get(1).getDay().dayOfMonth());
+    }
+
+    @Test
+    public void testFilteredRadioGuide_start_end() throws Exception {
+        List<DayGuide> dayGuides = dataProvider.obtainRadioGuide(null,createDateString(-1),createDateString(12));
+        assertNotNull(dayGuides);
+        assertEquals("We should have 14 days;", 14, dayGuides.size());
         LocalDate now = new LocalDate();
         assertEquals(now.dayOfMonth(), dayGuides.get(1).getDay().dayOfMonth());
     }

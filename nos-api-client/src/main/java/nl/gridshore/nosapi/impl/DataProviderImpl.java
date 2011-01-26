@@ -19,7 +19,6 @@ import nl.gridshore.nosapi.*;
 import nl.gridshore.nosapi.mapping.*;
 import nl.gridshore.nosapi.mapping.DayGuide;
 import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
@@ -154,20 +153,18 @@ public class DataProviderImpl implements DataProvider {
 
     @Override
     public List<nl.gridshore.nosapi.DayGuide> obtainTVGuide(TVChannel channel, String startDate, String endDate) {
-        String type = "tv";
+        String channelName = (channel != null)?channel.toString():null;
+        return obtainGuide(channelName, startDate, endDate, "tv");
+    }
 
-        // validate provided dates
-        if (StringUtils.hasText(startDate) || StringUtils.hasText(endDate)) {
-            if (!StringUtils.hasText(startDate) || !StringUtils.hasText(endDate)) {
-                throw new IllegalArgumentException(
-                        "When providing a start or end data, the other one needs to be provided as well.");
-            }
-            DateTime startTime = formatter.parseDateTime(startDate);
-            DateTime endTime = formatter.parseDateTime(endDate);
-            if (endTime.isBefore(startTime)) {
-                throw new IllegalArgumentException("Start date must be before end date");
-            }
-        }
+    @Override
+    public List<nl.gridshore.nosapi.DayGuide> obtainRadioGuide(RadioChannel channel, String startDate, String endDate) {
+        String channelName = (channel != null)?channel.toString():null;
+        return obtainGuide(channelName, startDate, endDate, "radio");
+    }
+
+    private List<nl.gridshore.nosapi.DayGuide> obtainGuide(String channel, String startDate, String endDate, String type) {
+        validateStartEndDate(startDate, endDate);
 
         StringBuilder builder = new StringBuilder();
         builder.append(serverBaseUrl);
@@ -192,6 +189,20 @@ public class DataProviderImpl implements DataProvider {
         Guide guide = restTemplate.getForObject(builder.toString(), Guide.class, arguments.toArray());
 
         return mapJSONGuideToOurGuide(guide);
+    }
+
+    private void validateStartEndDate(String startDate, String endDate) {
+        if (StringUtils.hasText(startDate) || StringUtils.hasText(endDate)) {
+            if (!StringUtils.hasText(startDate) || !StringUtils.hasText(endDate)) {
+                throw new IllegalArgumentException(
+                        "When providing a start or end data, the other one needs to be provided as well.");
+            }
+            DateTime startTime = formatter.parseDateTime(startDate);
+            DateTime endTime = formatter.parseDateTime(endDate);
+            if (endTime.isBefore(startTime)) {
+                throw new IllegalArgumentException("Start date must be before end date");
+            }
+        }
     }
 
     private List<nl.gridshore.nosapi.DayGuide> obtainGuide(String type) {

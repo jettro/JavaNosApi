@@ -39,7 +39,7 @@
     <div class="heading">
         <h2>Guides</h2>
         <a href="${ctx}/tvguide">TV Guide</a>&nbsp;|&nbsp;<a href="${ctx}/tvguide/filter">filter</a><br/>
-        <a href="${ctx}/radioguide">Radio Guide</a><br/>
+        <a href="${ctx}/radioguide">Radio Guide</a>&nbsp;|&nbsp;<a href="${ctx}/radioguide/filter">filter</a><br/>
     </div>
     <div class="heading">
         <h2>Search</h2>

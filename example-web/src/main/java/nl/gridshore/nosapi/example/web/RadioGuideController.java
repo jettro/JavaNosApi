@@ -17,6 +17,7 @@ package nl.gridshore.nosapi.example.web;
 
 import nl.gridshore.nosapi.DataProvider;
 import nl.gridshore.nosapi.DayGuide;
+import nl.gridshore.nosapi.RadioChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -49,6 +51,20 @@ public class RadioGuideController {
         List<DayGuide> dayGuides = dataProvider.obtainRadioGuide();
         modelMap.addAttribute("days", dayGuides);
         return "guide/radioguide";
+    }
+
+    @RequestMapping("/filter")
+    public String showGuide(@RequestParam(value = "channel", required = false) RadioChannel channel,
+                            @RequestParam(value = "startdate", required = false) String startDate,
+                            @RequestParam(value = "enddate", required = false) String endDate,
+                            ModelMap modelMap) {
+        logger.debug("Received request for filtered radio guide");
+        if (channel != null || startDate != null || endDate != null) {
+            List<DayGuide> dayGuides = dataProvider.obtainRadioGuide(channel, startDate, endDate);
+            modelMap.addAttribute("days", dayGuides);
+        }
+        modelMap.addAttribute("radiochannels", RadioChannel.values());
+        return "guide/radioguidefilter";
     }
 
 }
