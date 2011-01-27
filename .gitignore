@@ -9,4 +9,4 @@
 target/
 out/*
 # specific configuration file
-**/key.properties
+nos-api-client/src/test/resources/key.properties
