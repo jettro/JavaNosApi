@@ -45,12 +45,19 @@
         <h2>Search</h2>
         <a href="${ctx}/search">Search for News</a><br/>
     </div>
+    <div class="about">
+        <img src="${ctx}/image/logo-open-nos.png" height="50" width="202"/><br/>
+        <a href="${ctx}/version">Version</a>
+
+    </div>
     <br clear="all"/>
 </div>
 
 <div id="main">
     <decorator:body/>
 </div>
-
+<div id="footer">
+    <span>Powered by <a href="">NOS Open data API</a></span>
+</div>
 </body>
 </html>

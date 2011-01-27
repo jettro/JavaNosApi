@@ -14,18 +14,30 @@
  */
 
 body {
-
+    height: 100%;
 }
+
+#footer {
+    padding-top: 100px;
+    text-align: center;
+    font-size: smaller;
+    font-style: italic;
+}
+
+#footer a {
+    color: #00008b
+}
+
 /* Navigation*/
 #navigation {
     background-color: #d3d3d3;
-    color:#00008b;
+    color: #00008b;
     border: 1px solid black;
-    display:block;
+    display: block;
 }
 
 #navigation div.heading {
-    float:left;
+    float: left;
     padding: 0 20px;
     border-right: 1px solid #00008b;
     height: 150px;
@@ -33,46 +45,64 @@ body {
 }
 
 #navigation div.heading a {
-    text-decoration:none;
-    font-size:large;
+    text-decoration: none;
+    font-size: large;
+    color: #00008b;
+}
+
+#navigation div.about {
+    float: right;
+    vertical-align: top;
+    text-align: right;
+}
+
+#navigation div.about a {
+    font-size: smaller;
+    color: #00008b;
+}
+
+#navigation div.about img {
+    padding: 5px;
+    margin: 5px;
+    background-color: white;
 }
 
 /* Article styling */
 .article {
     border: 1px solid #00008b;
-    margin-bottom:10px;
-    clear:left;
-    display:block;
-    min-height:93px;
+    margin-bottom: 10px;
+    clear: left;
+    display: block;
+    min-height: 93px;
 }
 
 .article img {
-    display:block;
-    float:left;
+    display: block;
+    float: left;
 }
 
 .article .title {
-    padding-bottom:10px;
+    padding-bottom: 10px;
     font-size: larger;
 }
 
 .article .title a {
-    color:#00008b;
+    color: #00008b;
 }
 
 .article .description {
-    padding-bottom:10px;
+    padding-bottom: 10px;
 }
 
 .footer {
     color: silver;
-    font-style:italic;
-    font-size:smaller;
+    font-style: italic;
+    font-size: smaller;
 }
 
 /* keyword styling */
 .keyword {
-    font-size:small;
+    font-size: small;
 }
 
 .keyword .tag {
