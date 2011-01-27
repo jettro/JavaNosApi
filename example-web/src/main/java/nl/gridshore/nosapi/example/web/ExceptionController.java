@@ -29,7 +29,6 @@ public class ExceptionController {
 
     @ExceptionHandler(UnknownClientException.class)
     public String handleUnknownClientException(UnknownClientException exception, HttpServletRequest request) {
-
         return "error";
     }
 }
