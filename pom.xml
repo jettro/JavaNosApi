@@ -20,10 +20,45 @@
 
     <groupId>nl.gridshore.nosapi</groupId>
     <artifactId>gridshore-nosapi</artifactId>
-    <packaging>pom</packaging>
     <version>0.1-SNAPSHOT</version>
 
+    <packaging>pom</packaging>
+
     <name>Gridshore NOS API</name>
+
+    <description>
+        This project is a java wrapper and client for the NOS open data API. The project consists of two modules. The
+        nos-api-client, this is what you can use for your own project. The other component is the example. A basic
+        implementation that uses the nos-api-client to show what you can do with it.
+    </description>
+
+    <url>https://github.com/jettro/JavaNosApi</url>
+
+    <licenses>
+        <license>
+            <name>Apache 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:git@github.com:jettro/JavaNosApi.git</connection>
+        <url>scm:git:git@github.com:jettro/JavaNosApi.git</url>
+        <developerConnection>scm:git:git@github.com:jettro/JavaNosApi.git</developerConnection>
+    </scm>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>sonatype</id>
+            <url>http://oss.sonatype.org/content/repositories/snapshots</url>
+            <uniqueVersion>true</uniqueVersion>
+        </snapshotRepository>
+        <repository>
+            <id>sonatype</id>
+            <url>http://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+            <uniqueVersion>false</uniqueVersion>
+        </repository>
+    </distributionManagement>
 
     <properties>
         <slf4j.version>1.6.1</slf4j.version>
@@ -47,6 +82,18 @@
                     <target>1.6</target>
                 </configuration>
                 <version>2.3.2</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <includes>
+                        <include>**/*Test.java</include>
+                    </includes>
+                    <excludes>
+                        <exclude>**/*IntegrationTest.java</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -80,15 +127,51 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.8.1</version>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>
 
-    <repositories>
-        <repository>
-            <id>ibiblio.mirrors</id>
-            <name>ibiblio.mirrors</name>
-            <url>http://mirrors.ibiblio.org/pub/mirrors/maven2</url>
-        </repository>
-    </repositories>
+    <profiles>
+        <profile>
+            <id>release-sign-artifacts</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.0</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <!--suppress MavenModelInspection -->
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+    <developers>
+        <developer>
+            <name>Jettro Coenradie</name>
+            <email>jettro@gridshore.nl</email>
+            <organization>Gridshore</organization>
+            <organizationUrl>www.gridshore.nl</organizationUrl>
+            <roles>
+                <role>Project Owner</role>
+            </roles>
+        </developer>
+
+    </developers>
 </project>
