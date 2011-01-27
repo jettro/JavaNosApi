@@ -19,7 +19,7 @@
 
     <groupId>nl.gridshore.nosapi</groupId>
     <artifactId>gridshore-nosapi</artifactId>
-    <version>0.1.1-SNAPSHOT</version>
+    <version>0.1.1</version>
 
     <packaging>pom</packaging>
 
