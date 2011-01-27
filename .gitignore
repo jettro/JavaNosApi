@@ -9,4 +9,4 @@
 target/
 out/*
 # specific configuration file
-src/test/resources/key.properties
+**/key.properties
