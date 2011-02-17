@@ -17,6 +17,7 @@ package nl.gridshore.nosapi.example.web;
 
 import nl.gridshore.nosapi.DataProvider;
 import nl.gridshore.nosapi.SearchResults;
+import nl.gridshore.nosapi.SearchSort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -39,10 +40,10 @@ public class SearchController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String search(@RequestParam(value = "q",required = false) String queryString, ModelMap modelMap) {
+    public String search(@RequestParam(value = "q", required = false) String queryString, ModelMap modelMap) {
         SearchResults searchResults = null;
         if (StringUtils.hasText(queryString)) {
-            searchResults = dataProvider.searchForDocuments(queryString);
+            searchResults = dataProvider.searchForDocuments(queryString, SearchSort.DATE);
         }
 
         modelMap.addAttribute("results", searchResults);

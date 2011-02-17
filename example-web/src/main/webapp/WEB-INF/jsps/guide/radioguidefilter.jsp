@@ -15,8 +15,9 @@
 ~ limitations under the License.
 --%>
 <h2>Radio Guide</h2>
+
 <form method="GET" action="${ctx}/radioguide/filter">
-    <label for="channel">TV Channel</label>
+    <label for="channel">Radio Channel</label>
     <select id="channel" name="channel">
         <c:forEach items="${radiochannels}" var="item">
             <option value="${item}">${item}</option>
@@ -28,4 +29,4 @@
     <input id="enddate" name="enddate"/><br/>
     <input type="submit" value="Search"/>
 </form>
-<jsp:include page="guide.jsp" />
+<jsp:include page="guide.jsp"/>
