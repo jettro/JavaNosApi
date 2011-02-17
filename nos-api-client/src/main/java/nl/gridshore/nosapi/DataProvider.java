@@ -31,7 +31,7 @@ public interface DataProvider {
     /**
      * Returns information about the version of the NOS api used. Might in the future be used for returned data
      * about the version of our own api as well.
-     * {@link "http://open.nos.nl/documentatie/v1/algemeen/versie"}
+     * {@link "http://open.nos.nl/documentatie/v2/algemeen/versie"}
      *
      * @return Version object that contains the version data
      */
@@ -39,7 +39,7 @@ public interface DataProvider {
 
     /**
      * Returns a List of articles that are obtained using the latest news api call of the nos api
-     * {@link "http://open.nos.nl/documentatie/v1/overzicht/laatste10artikelen/"}
+     * {@link "http://open.nos.nl/documentatie/v2/overzicht/laatste10artikelen/"}
      *
      * @return List of news Articles
      */
@@ -47,7 +47,7 @@ public interface DataProvider {
 
     /**
      * Returns a List of sports articles that are obtained using the latest sports news api call of the nos api
-     * {@link "http://open.nos.nl/documentatie/v1/overzicht/laatste10artikelen/"}
+     * {@link "http://open.nos.nl/documentatie/v2/overzicht/laatste10artikelen/"}
      *
      * @return List of news Articles
      */
@@ -55,7 +55,7 @@ public interface DataProvider {
 
     /**
      * Returns a List of videos that are obtained using the latest news api call of the nos api
-     * {@link "http://open.nos.nl/documentatie/v1/overzicht/laatste10video/"}
+     * {@link "http://open.nos.nl/documentatie/v2/overzicht/laatste10video/"}
      *
      * @return List of news Articles
      */
@@ -63,7 +63,7 @@ public interface DataProvider {
 
     /**
      * Returns a List of sports videos that are obtained using the latest sports news api call of the nos api
-     * {@link "http://open.nos.nl/documentatie/v1/overzicht/laatste10video/"}
+     * {@link "http://open.nos.nl/documentatie/v2/overzicht/laatste10video/"}
      *
      * @return List of news Articles
      */
@@ -71,7 +71,7 @@ public interface DataProvider {
 
     /**
      * Returns a List of audio that are obtained using the latest news api call of the nos api
-     * {@link "http://open.nos.nl/documentatie/v1/overzicht/laatste10audio/"}
+     * {@link "http://open.nos.nl/documentatie/v2/overzicht/laatste10audio/"}
      *
      * @return List of news Articles
      */
@@ -79,7 +79,7 @@ public interface DataProvider {
 
     /**
      * Returns a List of sports audio that are obtained using the latest sports news api call of the nos api
-     * {@link "http://open.nos.nl/documentatie/v1/overzicht/laatste10audio/"}
+     * {@link "http://open.nos.nl/documentatie/v2/overzicht/laatste10audio/"}
      *
      * @return List of news Articles
      */
@@ -87,16 +87,30 @@ public interface DataProvider {
 
     /**
      * The search functionality is limited to one keyword or two keywords combined with AND or OR
-     * {@link "http://open.nos.nl/documentatie/v1/zoeken/query"}
+     * {@link "http://open.nos.nl/documentatie/v2/zoeken/query"}
      *
      * @param queryString String containing the queryString
      * @return SearchResults objects found with the query string containing the documents and the keywords
      */
     SearchResults searchForDocuments(String queryString);
 
+
+    /**
+     * The search functionality is limited to one keyword or two keywords combined with AND or OR. You can also
+     * provide a sort order. At the moment two options are available using the enumeration SearchSort. You can sort
+     * by Score (which is the default) and by date.
+     * {@link "http://open.nos.nl/documentatie/v2/zoeken/query"}
+     *
+     * @param queryString String containing the queryString
+     * @param sort Enumeration of values that can be used for the sort. The default is sort by Score
+     * @return SearchResults objects found with the query string containing the documents and the keywords
+     */
+    SearchResults searchForDocuments(String queryString, SearchSort sort);
+
+
     /**
      * Returns the tv guide for yesterday, today and tomorrow as specified for the default in the NOS api.
-     * {@link "http://open.nos.nl/documentatie/v1/gids/tv/"}
+     * {@link "http://open.nos.nl/documentatie/v2/gids/tv/"}
      *
      * @return Guide containing the tv programs for the mentioned three days
      */
@@ -104,7 +118,7 @@ public interface DataProvider {
 
     /**
      * Returns the radio guide for yesterday, today and tomorrow as specified for the default in the NOS api.
-     * {@link "http://open.nos.nl/documentatie/v1/gids/radio/"}
+     * {@link "http://open.nos.nl/documentatie/v2/gids/radio/"}
      *
      * @return Guide containing the tv programs for the mentioned three days
      */
@@ -113,7 +127,7 @@ public interface DataProvider {
     /**
      * Returns the list of days with a maximum of 14 with all tv shows on those days for specified channel. The channel
      * and the start/end dat are not mandatory to provide. If providing dates, you always have to provide both dates.
-     * The end date must be after the start date. In case of exceptions, IllegalArgumentException obejcts are thrown.
+     * The end date must be after the start date. In case of exceptions, IllegalArgumentException objects are thrown.
      *
      * Date's must have format yyyy-mm-dd.
      *
@@ -127,7 +141,7 @@ public interface DataProvider {
     /**
      * Returns the list of days with a maximum of 14 with all radio shows on those days for specified channel. The channel
      * and the start/end dat are not mandatory to provide. If providing dates, you always have to provide both dates.
-     * The end date must be after the start date. In case of exceptions, IllegalArgumentException obejcts are thrown.
+     * The end date must be after the start date. In case of exceptions, IllegalArgumentException objects are thrown.
      *
      * Date's must have format yyyy-mm-dd.
      *

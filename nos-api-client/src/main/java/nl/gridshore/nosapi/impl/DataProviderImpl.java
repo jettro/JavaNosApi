@@ -101,11 +101,22 @@ public class DataProviderImpl implements DataProvider {
 
     @Override
     public SearchResults searchForDocuments(String queryString) {
+        return this.searchForDocuments(queryString,null);
+    }
+
+    @Override
+    public SearchResults searchForDocuments(String queryString, SearchSort sort) {
         Assert.notNull(queryString);
-        String url = serverBaseUrl + "search/query/key/{apikey}/output/json/q/{search}";
+        String searchSort;
+        if (sort == null) {
+            searchSort = SearchSort.SCORE.toString().toLowerCase();
+        } else {
+            searchSort = sort.toString().toLowerCase();
+        }
+        String url = serverBaseUrl + "search/query/key/{apikey}/output/json/q/{search}/sort/{sort}";
         SearchWrapper searchResults;
         try {
-            searchResults = restTemplate.getForObject(url, SearchWrapper.class, apiKey, queryString);
+            searchResults = restTemplate.getForObject(url, SearchWrapper.class, apiKey, queryString,searchSort);
         } catch (HttpMessageNotReadableException e) {
             logger.error("There might be a problem on the server while searching for documents. Usually this exception " +
                     "is thrown if the json returned has a wrong format. The used query is {}",

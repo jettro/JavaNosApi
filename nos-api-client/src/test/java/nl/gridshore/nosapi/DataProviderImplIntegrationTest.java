@@ -110,6 +110,12 @@ public class DataProviderImplIntegrationTest {
     }
 
     @Test
+    public void testSearchForDocumentsByDate() throws Exception {
+        SearchResults voetbal = dataProvider.searchForDocuments("voetbal",SearchSort.DATE);
+        assertEquals(25, voetbal.getDocuments().size());
+    }
+
+    @Test
     public void testTvGuide() throws Exception {
         List<DayGuide> dayGuides = dataProvider.obtainTVGuide();
         assertNotNull(dayGuides);
