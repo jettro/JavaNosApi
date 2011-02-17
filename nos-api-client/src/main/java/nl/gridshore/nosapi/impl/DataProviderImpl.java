@@ -43,7 +43,7 @@ public class DataProviderImpl implements DataProvider {
     private final static Logger logger = LoggerFactory.getLogger(DataProviderImpl.class);
     private final static DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
 
-    private String serverBaseUrl = "http://open.nos.nl/v1/";
+    private String serverBaseUrl = "http://open.nos.nl/v2/";
 
     private final String apiKey;
     private final RestTemplate restTemplate;
@@ -250,7 +250,6 @@ public class DataProviderImpl implements DataProvider {
                     article.getThumbnail_m(),
                     article.getThumbnail_s(),
                     article.getThumbnail_xs(),
-                    article.getThumbnail(),
                     article.getEmbedCode()
             ));
         }

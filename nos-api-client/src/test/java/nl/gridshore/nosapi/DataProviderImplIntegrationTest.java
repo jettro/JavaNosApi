@@ -53,8 +53,8 @@ public class DataProviderImplIntegrationTest {
     @Test
     public void testObtainVersion() throws Exception {
         Version version = dataProvider.obtainVersion();
-        assertEquals("v1", version.getVersion());
-        assertEquals("0.0.1", version.getBuild());
+        assertEquals("v2", version.getVersion());
+        assertEquals("0.0.2", version.getBuild());
     }
 
     @Test

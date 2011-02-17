@@ -35,7 +35,6 @@ public class Article {
     private String thumbnail_xs;
     private String thumbnail_s;
     private String thumbnail_m;
-    private String thumbnail;
     private String embedCode;
     private ArrayList<String> keywords = new ArrayList<String>();
 
@@ -139,11 +138,4 @@ public class Article {
         this.embedCode = embedCode;
     }
 
-    public String getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
-    }
 }
