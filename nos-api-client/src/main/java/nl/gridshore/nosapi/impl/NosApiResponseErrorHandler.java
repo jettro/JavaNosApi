@@ -76,13 +76,13 @@ public class NosApiResponseErrorHandler implements ResponseErrorHandler {
     }
 
     private void throwClientException(Charset charset, byte[] body) throws IOException {
-        String jsonContentString = (charset != null)?new String(body, charset):new String(body);
+        String jsonContentString = (charset != null) ? new String(body, charset) : new String(body);
 
         ObjectMapper mapper = new ObjectMapper();
         JsonNode rootNode = mapper.readValue(jsonContentString, JsonNode.class);
         String type = rootNode.getFieldNames().next();
 
-        JsonNode errorNode = rootNode.getElements().next().get("error");
+        JsonNode errorNode = rootNode.get("error");
         int code = errorNode.get("code").getIntValue();
         String message = errorNode.get("message").getTextValue();
         throw new ClientException(code, type, message);

@@ -26,8 +26,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Properties;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 /**
  * @author Jettro Coenradie
@@ -48,6 +47,17 @@ public class DataProviderImplIntegrationTest {
     @Before
     public void createInstanceProperties() {
         dataProvider = new DataProviderImpl(key);
+    }
+
+    @Test
+    public void testWrongApiKey() {
+        DataProvider wrongDataProvider = new DataProviderImpl("1234567890");
+        try {
+            wrongDataProvider.obtainVersion();
+            fail("An exception was expected due to the wrong key");
+        } catch (ClientException e) {
+            assertEquals(201, e.getCode());
+        }
     }
 
     @Test
@@ -119,7 +129,7 @@ public class DataProviderImplIntegrationTest {
 
     @Test
     public void testFilteredTvGuide_channel() throws Exception {
-        List<DayGuide> dayGuides = dataProvider.obtainTVGuide(TVChannel.NL1,null,null);
+        List<DayGuide> dayGuides = dataProvider.obtainTVGuide(TVChannel.NL1, null, null);
         assertNotNull(dayGuides);
         assertEquals("We should have 3 days; yesterday, today and tomorrow.", 3, dayGuides.size());
         LocalDate now = new LocalDate();
@@ -128,7 +138,7 @@ public class DataProviderImplIntegrationTest {
 
     @Test
     public void testFilteredRadioGuide_start_end() throws Exception {
-        List<DayGuide> dayGuides = dataProvider.obtainRadioGuide(null,createDateString(-1),createDateString(12));
+        List<DayGuide> dayGuides = dataProvider.obtainRadioGuide(null, createDateString(-1), createDateString(12));
         assertNotNull(dayGuides);
         assertEquals("We should have 14 days;", 14, dayGuides.size());
         LocalDate now = new LocalDate();
@@ -137,7 +147,7 @@ public class DataProviderImplIntegrationTest {
 
     @Test
     public void testFilteredTvGuide_start_end() throws Exception {
-        List<DayGuide> dayGuides = dataProvider.obtainTVGuide(null,createDateString(-1),createDateString(12));
+        List<DayGuide> dayGuides = dataProvider.obtainTVGuide(null, createDateString(-1), createDateString(12));
         assertNotNull(dayGuides);
         assertEquals("We should have 14 days;", 14, dayGuides.size());
         LocalDate now = new LocalDate();
@@ -146,22 +156,22 @@ public class DataProviderImplIntegrationTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testFilteredTvGuide_start() throws Exception {
-        dataProvider.obtainTVGuide(null,createDateString(-1), null);
+        dataProvider.obtainTVGuide(null, createDateString(-1), null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testFilteredTvGuide_end() throws Exception {
-        dataProvider.obtainTVGuide(null,null,createDateString(-1));
+        dataProvider.obtainTVGuide(null, null, createDateString(-1));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testFilteredTvGuide_start_end_wrongdateformat() throws Exception {
-        dataProvider.obtainTVGuide(null,createDateString(-1),"dfdsfds");
+        dataProvider.obtainTVGuide(null, createDateString(-1), "dfdsfds");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testFilteredTvGuide_start_end_endbeforestart() throws Exception {
-        dataProvider.obtainTVGuide(null,createDateString(5),createDateString(-1));
+        dataProvider.obtainTVGuide(null, createDateString(5), createDateString(-1));
     }
 
 
